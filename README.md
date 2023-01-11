@@ -4,7 +4,7 @@ a simple service, code wise. but it's not simple logic wise, there's gradio libr
 
 ~~~~ /deal with the damage/ ~~~~ ///
 
-he don't need an airplane
+he don't need an airplane   WHAT'S THE USE
 
 i come undone completely when you cry
 
