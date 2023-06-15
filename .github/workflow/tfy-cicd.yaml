@@ -1,0 +1,30 @@
+name: Deploy on Truefoundry
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "Deploying ${{ github.ref }} to servicefoundry"
+      - name: Run Curl command
+        id: curl
+        run: echo "::set-output name=response::$(curl --location --request GET '${{ env.CONTROL_PLANE_URL }}/v1/app/cliw4toyo03gc1heg5y614zwi/manifest' \
+        --header 'authorization: Bearer ${{ secrets.TFY_API_KEY }}')"
+      - name: editing SHA
+        run: echo "$resp" | jq '.image.build_source.ref |= ${{ github.sha }}
+      - name: Generate servicefoundry-patched.yaml
+        run: echo "${{ steps.curl.outputs.response }}" | yq -P > servicefoundry-patched.yaml
+      - name: Install servicefoundry
+        run: pip install servicefoundry
+      - name: Deploy
+        run: sfy deploy --workspace-fqn tfy-ctl-euwe1-devtest:kushagra-ws --file servicefoundry-patched.yaml
+        env:
+          TFY_API_KEY: ${{ secrets.TFY_API_KEY }}
+          TFY_HOST: ${{ env.CONTROL_PLANE_URL }}
+          
