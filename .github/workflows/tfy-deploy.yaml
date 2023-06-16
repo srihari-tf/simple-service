@@ -23,6 +23,8 @@ jobs:
         run: cat "tfy-manifest.json" | jq --arg sha "${{ github.sha }}" '.image.build_source.ref |= $sha' > new-tfy-manifest.json
       - name: Generate servicefoundry-patched.yaml
         run: cat "new-tfy-manifest.json" | yq -P > servicefoundry-patched.yaml
+      - name: Print servicefoundry-patched.yaml
+        run: cat servicefoundry-patched.yaml
       - name: Install servicefoundry
         run: pip install servicefoundry
       - name: Deploy
