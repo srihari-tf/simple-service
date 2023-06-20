@@ -1,1 +1,1 @@
-# a *very* simple service 🥺
+# a *mini* simple service 🥺
