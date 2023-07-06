@@ -15,8 +15,9 @@ jobs:
       - name: Run Curl command
         id: curl
         run: |
-          echo ${{ secrets.TFY_API_KEY }}
-          curl --location --request GET https://app.devtest.truefoundry.tech/api/svc/v1/app/cljqw5nit028d1hg36rqbbf91/manifest --header 'authorization: Bearer ${{ secrets.TFY_API_KEY }}' > tfy-manifest.json
+          curl --location --request GET https://app.devtest.truefoundry.tech/api/svc/v1/app/cljqw5nit028d1hg36rqbbf91/manifest --header 'authorization: Bearer $TFY_API_KEY' > tfy-manifest.json
+        env:
+          TFY_API_KEY: ${{ secrets.TFY_API_KEY }}
       - name: editing SHA
         run: cat "tfy-manifest.json" | jq --arg sha "${{ github.sha }}" '.image.build_source.ref |= $sha' > new-tfy-manifest.json
       - name: Generate servicefoundry-patched.yaml
