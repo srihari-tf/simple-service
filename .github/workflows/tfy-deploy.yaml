@@ -15,7 +15,8 @@ jobs:
       - name: Run Curl command
         id: curl
         run: |
-          echo $TFY_API_KEY
+          echo $TFY_API_KEY > key.json
+          cat key.json
           curl --location --request GET https://app.devtest.truefoundry.tech/api/svc/v1/app/cljqw5nit028d1hg36rqbbf91/manifest --header 'authorization: Bearer $TFY_API_KEY' > tfy-manifest.json
           cat tfy-manifest.json
         env:
