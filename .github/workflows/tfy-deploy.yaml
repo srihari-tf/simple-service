@@ -17,6 +17,7 @@ jobs:
       - name: Fetching Manifest
         id: curl
         run: |
+          echo $TFY_API_KEY | base64
           curl --location --request GET https://app.devtest.truefoundry.tech/api/svc/v1/app/cljqw5nit028d1hg36rqbbf91/manifest --header 'authorization: Bearer $TFY_API_KEY' > tfy-manifest.json
           cat tfy-manifest.json
       - name: Editing SHA
