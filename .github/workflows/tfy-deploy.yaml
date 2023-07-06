@@ -12,14 +12,14 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
       - run: echo "Deploying ${{ github.ref }} to servicefoundry"
-      - name: Run Curl command
+      - name: Fetching Manifest
         id: curl
         run: |
           curl --location --request GET https://app.devtest.truefoundry.tech/api/svc/v1/app/cljqw5nit028d1hg36rqbbf91/manifest --header 'authorization: Bearer $TFY_API_KEY' > tfy-manifest.json
           cat tfy-manifest.json
         env:
           TFY_API_KEY: ${{ secrets.TFY_API_KEY }}
-      - name: editing SHA
+      - name: Editing SHA
         run: cat "tfy-manifest.json" | jq --arg sha "${{ github.sha }}" '.image.build_source.ref |= $sha' > new-tfy-manifest.json
       - name: Generate servicefoundry-patched.yaml
         run: cat "new-tfy-manifest.json" | yq -P > servicefoundry-patched.yaml
