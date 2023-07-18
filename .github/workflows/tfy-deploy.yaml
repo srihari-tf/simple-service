@@ -6,7 +6,7 @@ on:
 
 env:
   TFY_API_KEY: ${{ secrets.TFY_API_KEY }}
-  TFY_HOST: https://app.devtest.truefoundry.tech
+  TFY_HOST: https://app.truefoundry.com
 
 jobs:
   deploy:
@@ -19,7 +19,7 @@ jobs:
       - name: Fetch manifest
         id: curl
         run: |
-          curl --location --request GET https://app.devtest.truefoundry.tech/api/svc/v1/app/cljqw5nit028d1hg36rqbbf91/manifest --header 'authorization: Bearer ${{ env.TFY_API_KEY }}' > tfy-manifest.json
+          curl --location --request GET https://app.truefoundry.com/api/svc/v1/app/clk8a3v5c1aga1hvv5jlff53u/manifest --header 'authorization: Bearer ${{ env.TFY_API_KEY }}' > tfy-manifest.json
       - name: editing SHA
         run: cat "tfy-manifest.json" | jq --arg sha "${{ github.sha }}" '.image.build_source.ref |= $sha' > new-tfy-manifest.json
       - name: Generate servicefoundry-patched.yaml
@@ -27,4 +27,4 @@ jobs:
       - name: Install servicefoundry
         run: pip install servicefoundry
       - name: Deploy
-        run: sfy deploy --workspace-fqn tfy-ctl-euwe1-devtest:srihari-ws --file servicefoundry-patched.yaml
+        run: sfy deploy --workspace-fqn ctl-demo:l4-test --file servicefoundry-patched.yaml
