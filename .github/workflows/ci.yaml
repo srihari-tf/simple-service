@@ -8,7 +8,7 @@ env:
   TFY_API_KEY: ${{ secrets.TFY_API_KEY }}
 
 jobs:
-  greeting_job:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Install servicefoundry
@@ -17,8 +17,15 @@ jobs:
         run: |
           sfy --json get application --application-fqn=tfy-ctl-euwe1-devtest:my-workspace:my-service | jq '.lastDeployment.manifest' > servicefoundry.json
       - name: Conver to yaml
-        run: cat "servicefoundry.json" | yq -P > servicefoundry.yaml
+        id: json2yaml
+        uses: fabasoad/yaml-json-xml-converter-action@main
+        with:
+          path: 'servicefoundry.json'
+          from: 'json'
+          to: 'yaml'
       - name: Generate servicefoundry-patched.yaml
-        run: sfy patch --file servicefoundry.yaml --filter='.image.image_uri = "testcontainers/helloworld' --output-file servicefoundry-patched.yaml
+        run: |
+          echo "${{ steps.json2yaml.outputs.data }}" > servicefoundry.yamla
+          sfy patch --file servicefoundry.yaml --filter='.image.image_uri = "testcontainers/helloworld' --output-file servicefoundry-patched.yaml
       - name: Deploy
         run: sfy deploy --workspace-fqn tfy-ctl-euwe1-devtest:my-workspace --file servicefoundry-patched.yaml
