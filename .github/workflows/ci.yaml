@@ -17,7 +17,11 @@ jobs:
         run: pip install servicefoundry
       - name: Fetch manifest
         run: |
-          sfy --json get application --application-fqn=tfy-ctl-euwe1-devtest:my-workspace:my-service > servicefoundry.json
+          output=$(sfy --json get application --application-fqn=tfy-ctl-euwe1-devtest:my-workspace:my-service)
+          echo $output
+        env:
+          TFY_HOST: https://app.devtest.truefoundry.tech
+          TFY_API_KEY: $TFY_API_KEY
       - name: Conver to yaml
         run: cat "servicefoundry.json" | yq -P > servicefoundry.yaml
       - name: Generate servicefoundry-patched.yaml
