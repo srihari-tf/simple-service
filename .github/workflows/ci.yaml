@@ -10,13 +10,12 @@ env:
 jobs:
   greeting_job:
     runs-on: ubuntu-latest
-    env:
-      Greeting: Hello
     steps:
       - name: Install servicefoundry
         run: pip install servicefoundry
       - name: Fetch manifest
         run: |
+          echo $TFY_HOST
           output=$(sfy --json get application --application-fqn=tfy-ctl-euwe1-devtest:my-workspace:my-service)
           echo $output
         env:
