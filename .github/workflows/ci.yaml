@@ -14,6 +14,6 @@ jobs:
       - name: Install servicefoundry
         run: pip install servicefoundry
       - name: Create patch file
-        run: echo 'image: { image_uri: testcontainers/helloworld }' > patch.yaml
+        run: echo "image: { image_uri: testcontainers/helloworld }" > patch.yaml
       - name: Deploy with patch
         run: sfy deploy-patch --application_fqn=tfy-ctl-euwe1-devtest:my-workspace:my-service --file=patch.yaml
