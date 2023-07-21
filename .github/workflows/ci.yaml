@@ -17,8 +17,7 @@ jobs:
         run: |
           echo $TFY_HOST
           echo $TFY_API_KEY
-          output=$(sfy --json get application --application-fqn=tfy-ctl-euwe1-devtest:my-workspace:my-service)
-          echo $output
+          sfy --json get application --application-fqn=tfy-ctl-euwe1-devtest:my-workspace:my-service
       - name: Conver to yaml
         run: cat "servicefoundry.json" | yq -P > servicefoundry.yaml
       - name: Generate servicefoundry-patched.yaml
