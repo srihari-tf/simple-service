@@ -25,6 +25,7 @@ jobs:
           to: 'yaml'
       - name: Generate servicefoundry-patched.yaml
         run: |
+          cat servicefoundry.yaml
           echo "${{ steps.json2yaml.outputs.data }}"
           echo "${{ steps.json2yaml.outputs.data }}" > servicefoundry.yaml
           sfy patch --file servicefoundry.yaml --filter='.image.image_uri = "testcontainers/helloworld' --output-file servicefoundry-patched.yaml
