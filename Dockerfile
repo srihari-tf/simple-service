@@ -1,5 +1,6 @@
-FROM ghcr.io/huggingface/text-generation-inference:0.8
-
-ENV HUGGING_FACE_HUB_TOKEN=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
-
-CMD ["--model-id", "meta-llama/Llama-2-13b-chat-hf"]
+FROM python:3.7
+COPY ./requirements.txt /tmp/
+RUN pip install -r /tmp/requirements.txt
+COPY . ./app
+WORKDIR app
+ENTRYPOINT python main.py
