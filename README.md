@@ -1,7 +1,7 @@
 # a simple service!
 
 
-This repository seems to contain code and configuration files for a simple web application that uses the Gradio library to create an interface for a greeting function. Here's a breakdown of the different components:
+This repository contains the code and configuration files for a simple web application that uses the Gradio library to create an interface for a greeting function. Here's a breakdown of the different components:
 
 **main.py**: This is the main Python script that contains the core logic of the application. It imports the gr module from the Gradio library and defines a function greet(name) which takes a name as input and returns a greeting message that includes the capitalized name. The Gradio interface is created using the gr.Interface class. It specifies that the function greet should be used as the backend function for the interface. The interface takes text input and produces text output. Finally, the launch method is called to start the Gradio interface on a specified server name and port (0.0.0.0:8080).
 
