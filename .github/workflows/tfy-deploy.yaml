@@ -1,0 +1,21 @@
+name: Deploy on Truefoundry
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  TFY_HOST: https://app.devtest.truefoundry.tech
+  TFY_APPLICATION_FQN: tfy-ctl-euwe1-devtest:srihari-ws:simple-svc-1:6
+  TFY_API_KEY: ${{ secrets.TFY_API_KEY }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Install servicefoundry
+        run: pip install servicefoundry
+      - name: Deploy with patch
+        run: sfy patch-application --application_fqn=tfy-ctl-euwe1-devtest:srihari-ws:simple-svc-1:6 --patch='{"image": {"build_source": {"ref": "${{ github.sha }}"}}}'
