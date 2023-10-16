@@ -1,4 +1,4 @@
-# a simple service
+# A simple service
 
 
 This repository contains the code and configuration files for a simple web application that uses the Gradio library to create an interface for a greeting function. Here's a breakdown of the different components:
